@@ -11,6 +11,6 @@ public class SingleDimentionArrays {
 		for(int j=0; j<i.length; j++) {
 			System.out.println(i[j]);
 		}
-	}
+
 
 }
