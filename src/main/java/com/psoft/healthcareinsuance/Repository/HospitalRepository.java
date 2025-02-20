@@ -1,4 +1,10 @@
 package com.psoft.healthcareinsuance.Repository;
 
-public class HospitalRepository {
+import com.psoft.healthcareinsuance.Entity.HospitalEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface HospitalRepository extends JpaRepository<HospitalEntity, Long>
+{
+
 }
+
