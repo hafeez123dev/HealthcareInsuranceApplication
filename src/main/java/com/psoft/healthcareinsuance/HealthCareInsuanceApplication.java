@@ -1,4 +1,4 @@
-package com.psoft.healthcareinsuance;
+ package com.psoft.healthcareinsuance;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

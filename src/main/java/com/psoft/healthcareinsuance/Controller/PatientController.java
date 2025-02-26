@@ -38,4 +38,14 @@ public class PatientController {
     public void deletePatient(@PathVariable Long id) {
         patientService.deletePatient(id);
     }
+
+    @GetMapping("/public")
+    public String publicEndpoint() {
+        return "This is a public endpoint.";
+    }
+
+    @GetMapping("/private")
+    public String privateEndpoint() {
+        return "This is a secured endpoint. You must be authenticated.";
+    }
 }

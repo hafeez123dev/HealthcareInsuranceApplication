@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class HospitalService {
@@ -26,13 +27,11 @@ public class HospitalService {
     }
 
     public HospitalEntity updateHospital(Long id, HospitalEntity hospitalDetails) {
-        HospitalEntity hospital = hospitalRepository.findById(id).orElse(null);
-        if (hospital != null) {
-            hospital.setName(hospitalDetails.getName());
-            hospital.setLocation(hospitalDetails.getLocation());
-            return hospitalRepository.save(hospital);
-        }
-        return null;
+        HospitalEntity hospital = hospitalRepository.findById(id).get();
+        if (Optional.ofNullable(hospital).isEmpty()) return null;
+        hospital.setName(hospitalDetails.getName());
+        hospital.setLocation(hospitalDetails.getLocation());
+        return hospitalRepository.save(hospital);
     }
 
     public void deleteHospital(Long id) {
