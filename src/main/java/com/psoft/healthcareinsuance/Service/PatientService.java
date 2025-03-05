@@ -4,8 +4,10 @@ package com.psoft.healthcareinsuance.Service;
 import com.psoft.healthcareinsuance.Entity.PatientEntity;
 import com.psoft.healthcareinsuance.ExceptionHandling.PatientNotFoundException;
 import com.psoft.healthcareinsuance.Repository.PatientRepository;
+import com.psoft.healthcareinsuance.helper.CSVhelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -43,5 +45,13 @@ public class PatientService {
             throw new PatientNotFoundException("Patient with ID " + id + " not found");
         }
         patientRepository.deleteById(id);
+    }
+    public void saveCSV(MultipartFile file) {
+        try {
+            List<PatientEntity> patients = CSVhelper.csvToPatients(file.getInputStream());
+            patientRepository.saveAll(patients);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to store CSV data: " + e.getMessage());
+        }
     }
 }
