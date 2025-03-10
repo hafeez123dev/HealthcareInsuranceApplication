@@ -13,7 +13,7 @@ public class PatientEntity {
     //@Column(name = " age", nullable = false)
     private int age;
    // @Column(name = " address", length = 100, nullable = false)
-    private String address;
+    private String city;
     //@Column(name = " medical_history", columnDefinition = "TEXT")
     private String medicalHistory;
 
@@ -45,12 +45,12 @@ public class PatientEntity {
     public void setName(String name) {
         this.name = name;
     }
-    public String getAddress() {
-        return address;
+    public String getCity() {
+        return city;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setCity(String city) {
+        this.city = city;
     }
     public Long getId() {
         return id;

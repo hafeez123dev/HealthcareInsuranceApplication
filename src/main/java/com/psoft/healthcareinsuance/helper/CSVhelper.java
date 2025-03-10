@@ -31,7 +31,7 @@ public class CSVhelper {
                 PatientEntity patient = new PatientEntity();
                 patient.setName(csvRecord.get("name"));
                 patient.setAge(Integer.parseInt(csvRecord.get("age")));
-                patient.setAddress(csvRecord.get("address"));
+                patient.setCity(csvRecord.get("city"));
                 patient.setMedicalHistory(csvRecord.get("medicalHistory"));
 
                 patientList.add(patient);

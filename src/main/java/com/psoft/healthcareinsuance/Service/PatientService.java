@@ -35,7 +35,7 @@ public class PatientService {
 
         patient.setName(patientDetails.getName());
         patient.setAge(patientDetails.getAge());
-        patient.setAddress(patientDetails.getAddress());
+        patient.setCity(patientDetails.getCity());
         patient.setMedicalHistory(patientDetails.getMedicalHistory());
         return patientRepository.save(patient);
     }
@@ -54,4 +54,8 @@ public class PatientService {
             throw new RuntimeException("Failed to store CSV data: " + e.getMessage());
         }
     }
+    public List<PatientEntity> getPatientsByCity(String city) {
+        return patientRepository.findByCity(city);
+    }
+
 }
