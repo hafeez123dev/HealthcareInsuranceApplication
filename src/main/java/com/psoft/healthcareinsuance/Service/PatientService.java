@@ -5,22 +5,26 @@ import com.psoft.healthcareinsuance.Entity.PatientEntity;
 import com.psoft.healthcareinsuance.ExceptionHandling.PatientNotFoundException;
 import com.psoft.healthcareinsuance.Repository.PatientRepository;
 import com.psoft.healthcareinsuance.helper.CSVhelper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-
+@Slf4j
 @Service
-public class PatientService {
+public class  PatientService {
     @Autowired
     private PatientRepository patientRepository;
 
     public List<PatientEntity> getAllPatients() {
+        log.info("Retrieving all patients from the database...");
         return patientRepository.findAll();
     }
 
     public PatientEntity getPatientById(Long id) {
+        log.debug("Retrieving patient with ID: {}", id);
         return patientRepository.findById(id)
                 .orElseThrow(() -> new PatientNotFoundException("Patient with ID " + id + " not found"));
     }
@@ -41,6 +45,7 @@ public class PatientService {
     }
 
     public void deletePatient(Long id) {
+        log.warn("Deleting patient with ID: {}", id);
         if (!patientRepository.existsById(id)) {
             throw new PatientNotFoundException("Patient with ID " + id + " not found");
         }

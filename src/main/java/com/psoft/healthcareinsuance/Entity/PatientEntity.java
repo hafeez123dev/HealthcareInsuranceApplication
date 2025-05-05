@@ -4,6 +4,7 @@ package com.psoft.healthcareinsuance.Entity;
 import jakarta.persistence.*;
 
 @Entity
+//@Table(name = "PatientEntity")
 public class PatientEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
