@@ -3,6 +3,8 @@ package com.psoft.healthcareinsuance.Controller;
 
 import com.psoft.healthcareinsuance.Entity.HospitalEntity;
 import com.psoft.healthcareinsuance.Service.HospitalService;
+import org.antlr.v4.runtime.misc.Pair;
+import org.antlr.v4.runtime.misc.Triple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,4 +40,8 @@ public class HospitalController {
     public void deleteHospital(@PathVariable Long id) {
         hospitalService.deleteHospital(id);
     }
+
+
+
+
 }

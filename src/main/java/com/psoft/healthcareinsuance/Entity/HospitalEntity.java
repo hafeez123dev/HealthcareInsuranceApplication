@@ -13,7 +13,7 @@ public class HospitalEntity {
     private String name;
     private String location;
 
-    // Getters and Setters
+    // Getters and Settersjjjjjjj
 
 
     public String getLocation() {

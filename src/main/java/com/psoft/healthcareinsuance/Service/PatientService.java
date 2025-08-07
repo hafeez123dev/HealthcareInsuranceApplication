@@ -2,23 +2,31 @@ package com.psoft.healthcareinsuance.Service;
 
 
 import com.psoft.healthcareinsuance.Entity.PatientEntity;
+import com.psoft.healthcareinsuance.ExceptionHandling.PatientNotFoundException;
 import com.psoft.healthcareinsuance.Repository.PatientRepository;
+import com.psoft.healthcareinsuance.helper.CSVhelper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-
+@Slf4j
 @Service
-public class PatientService {
+public class  PatientService {
     @Autowired
     private PatientRepository patientRepository;
 
     public List<PatientEntity> getAllPatients() {
+        log.info("Retrieving all patients from the database...");
         return patientRepository.findAll();
     }
 
     public PatientEntity getPatientById(Long id) {
-        return patientRepository.findById(id).orElse(null);
+        log.debug("Retrieving patient with ID: {}", id);
+        return patientRepository.findById(id)
+                .orElseThrow(() -> new PatientNotFoundException("Patient with ID " + id + " not found"));
     }
 
     public PatientEntity savePatient(PatientEntity patient) {
@@ -26,18 +34,33 @@ public class PatientService {
     }
 
     public PatientEntity updatePatient(Long id, PatientEntity patientDetails) {
-        PatientEntity patient = patientRepository.findById(id).orElse(null);
-        if (patient != null) {
-            patient.setName(patientDetails.getName());
-            patient.setAge(patientDetails.getAge());
-            patient.setAddress(patientDetails.getAddress());
-            patient.setMedicalHistory(patientDetails.getMedicalHistory());
-            return patientRepository.save(patient);
-        }
-        return null;
+        PatientEntity patient = patientRepository.findById(id)
+                .orElseThrow(() -> new PatientNotFoundException("Patient with ID " + id + " not found"));
+
+        patient.setName(patientDetails.getName());
+        patient.setAge(patientDetails.getAge());
+        patient.setCity(patientDetails.getCity());
+        patient.setMedicalHistory(patientDetails.getMedicalHistory());
+        return patientRepository.save(patient);
     }
 
     public void deletePatient(Long id) {
+        log.warn("Deleting patient with ID: {}", id);
+        if (!patientRepository.existsById(id)) {
+            throw new PatientNotFoundException("Patient with ID " + id + " not found");
+        }
         patientRepository.deleteById(id);
     }
+    public void saveCSV(MultipartFile file) {
+        try {
+            List<PatientEntity> patients = CSVhelper.csvToPatients(file.getInputStream());
+            patientRepository.saveAll(patients);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to store CSV data: " + e.getMessage());
+        }
+    }
+    public List<PatientEntity> getPatientsByCity(String city) {
+        return patientRepository.findByCity(city);
+    }
+
 }
